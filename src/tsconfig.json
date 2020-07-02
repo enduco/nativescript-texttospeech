@@ -17,7 +17,7 @@
     "noEmitOnError": false,
     "noImplicitAny": false,
     "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
+    "noImplicitUseStrict": true,
     "noFallthroughCasesInSwitch": true
   },
   "exclude": ["node_modules", "demo-ng", "demo"],

@@ -14,6 +14,8 @@ class MySpeechDelegate extends NSObject {
     if (doneCallback) {
       doneCallback();
     }
+
+    AVAudioSession.sharedInstance().setActiveError(false);
   }
 
   public speechSynthesizerDidPauseSpeechUtterance(synthesizer, utterance) {
@@ -40,8 +42,17 @@ export class TNSTextToSpeech {
   private _speechSynthesizer: any; /// AVSpeechSynthesizer
   private _lastOptions: SpeakOptions = null;
 
+  constructor() {
+    // we set the option to playback and duck other volume
+    const session = AVAudioSession.sharedInstance();
+    session.setCategoryWithOptionsError(AVAudioSessionCategoryPlayback, AVAudioSessionCategoryOptions.DuckOthers | AVAudioSessionCategoryOptions.InterruptSpokenAudioAndMixWithOthers);
+  }
+
   public speak(options: SpeakOptions): Promise<any> {
     return new Promise((resolve, reject) => {
+      // activate session
+      AVAudioSession.sharedInstance().setActiveError(true);
+
       if (!this._speechSynthesizer) {
         this._speechSynthesizer = AVSpeechSynthesizer.alloc().init();
         this._speechSynthesizer.delegate = new MySpeechDelegate();
@@ -67,7 +78,7 @@ export class TNSTextToSpeech {
 
       // valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
       if (!this.isNumber(options.speakRate)) {
-        options.speakRate = AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
+        options.speakRate = AVSpeechUtteranceDefaultSpeechRate; // default
       } else if (options.speakRate < AVSpeechUtteranceMinimumSpeechRate) {
         options.speakRate = AVSpeechUtteranceMinimumSpeechRate;
       } else if (options.speakRate > AVSpeechUtteranceMaximumSpeechRate) {

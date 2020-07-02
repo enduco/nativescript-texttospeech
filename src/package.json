@@ -1,6 +1,6 @@
 {
-  "name": "nativescript-texttospeech",
-  "version": "2.0.3",
+  "name": "nativescript-texttospeech-enduco",
+  "version": "1.0.3",
   "description": "A text to speech NativeScript plugin for Android and iOS",
   "main": "texttospeech",
   "typings": "index.d.ts",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bradmartin/nativescript-texttospeech.git"
+    "url": "https://github.com/enduco/nativescript-texttospeech.git"
   },
   "scripts": {
     "tsc": "tsc -skipLibCheck",
@@ -38,7 +38,7 @@
   "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
   "contributors": [
     {
-      "name": "Brad Martin",
+      "name": "enduco",
       "email": "bmartin@nstudio.io",
       "url": "https://github.com/BradMartin"
     },
@@ -63,13 +63,17 @@
       "name": "TJ VanToll",
       "email": "tj.vantoll@gmail.com",
       "url": "https://github.com/tjvantoll"
+    },
+    {
+      "name": "enduco",
+      "email": "hello@enduco.app"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bradmartin/nativescript-texttospeech/issues"
+    "url": "https://github.com/enduco/nativescript-mapbox/issues"
   },
-  "homepage": "https://github.com/bradmartin/nativescript-texttospeech",
+  "homepage": "https://github.com/enduco/nativescript-texttospeech",
   "readmeFilename": "README.md",
   "devDependencies": {
     "tns-core-modules": "^6.4.2",
