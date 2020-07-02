@@ -1,6 +1,6 @@
 {
   "name": "nativescript-texttospeech-enduco",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A text to speech NativeScript plugin for Android and iOS",
   "main": "texttospeech",
   "typings": "index.d.ts",

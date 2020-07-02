@@ -45,7 +45,7 @@ export class TNSTextToSpeech {
   constructor() {
     // we set the option to playback and duck other volume
     const session = AVAudioSession.sharedInstance();
-    session.setCategoryWithOptionsError(AVAudioSessionCategoryPlayback, AVAudioSessionCategoryOptions.DuckOthers | AVAudioSessionCategoryOptions.InterruptSpokenAudioAndMixWithOthers);
+    session.setCategoryWithOptionsError(AVAudioSessionCategoryPlayback, AVAudioSessionCategoryOptions.DuckOthers + AVAudioSessionCategoryOptions.InterruptSpokenAudioAndMixWithOthers);
   }
 
   public speak(options: SpeakOptions): Promise<any> {
