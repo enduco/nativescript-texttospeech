@@ -3,6 +3,7 @@
 import { SpeakOptions } from './index';
 
 let doneCallback;
+let session: AVAudioSession;
 
 class MySpeechDelegate extends NSObject {
   public static ObjCProtocols = [AVSpeechSynthesizerDelegate];
@@ -15,7 +16,9 @@ class MySpeechDelegate extends NSObject {
       doneCallback();
     }
 
-    AVAudioSession.sharedInstance().setActiveError(false);
+    if (session) {
+      session.setActiveError(false);
+    }
   }
 
   public speechSynthesizerDidPauseSpeechUtterance(synthesizer, utterance) {
@@ -42,16 +45,14 @@ export class TNSTextToSpeech {
   private _speechSynthesizer: any; /// AVSpeechSynthesizer
   private _lastOptions: SpeakOptions = null;
 
-  constructor() {
-    // we set the option to playback and duck other volume
-    const session = AVAudioSession.sharedInstance();
-    session.setCategoryWithOptionsError(AVAudioSessionCategoryPlayback, AVAudioSessionCategoryOptions.DuckOthers + AVAudioSessionCategoryOptions.InterruptSpokenAudioAndMixWithOthers);
-  }
-
   public speak(options: SpeakOptions): Promise<any> {
     return new Promise((resolve, reject) => {
-      // activate session
-      AVAudioSession.sharedInstance().setActiveError(true);
+
+      if (!session) {
+        // initialise session
+        session = AVAudioSession.sharedInstance();
+        session.setCategoryWithOptionsError(AVAudioSessionCategoryPlayback, AVAudioSessionCategoryOptions.DuckOthers + AVAudioSessionCategoryOptions.MixWithOthers);
+      }
 
       if (!this._speechSynthesizer) {
         this._speechSynthesizer = AVSpeechSynthesizer.alloc().init();
@@ -121,6 +122,11 @@ export class TNSTextToSpeech {
         this._speechSynthesizer.stopSpeakingAtBoundary(
           AVSpeechBoundary.Immediate
         );
+      }
+
+      // activate session
+      if (session) {
+        session.setActiveError(true);
       }
 
       this._speechSynthesizer.speakUtterance(speechUtterance);
